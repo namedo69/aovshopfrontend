@@ -1,0 +1,20 @@
+# Render Blueprint for AOVShop NhanVienCu — Frontend (Vite SPA + Express proxy)
+# Deploy: push repo len GitHub -> Render Dashboard -> New -> Blueprint -> chon repo.
+# BACKEND_URL = URL public cua backend (vi du: https://aovshopnhanviencu-backend.onrender.com).
+# VITE_API_URL=/api giu nguyen de browser goi cung origin -> server.js proxy sang backend.
+
+services:
+  - type: web
+    name: aovshopnhanviencu-frontend
+    runtime: node
+    buildCommand: npm install && npm run build
+    startCommand: node server.js
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 20.18.0
+      - key: VITE_API_URL
+        value: /api
+      - key: BACKEND_URL
+        sync: false
