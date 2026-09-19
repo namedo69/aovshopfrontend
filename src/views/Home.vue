@@ -109,22 +109,6 @@
       </div>
     </section>
 
-    <!-- Guest auth prompt (template style) -->
-    <section v-if="!authStore.isAuthenticated" class="auth-prompt-section">
-      <div class="container">
-        <div class="auth-prompt-card">
-          <p class="auth-prompt-text">
-            <strong>Xin chào Khách!</strong>
-            Vui lòng đăng nhập để mua hàng và xem số dư
-          </p>
-          <div class="auth-prompt-actions">
-            <router-link to="/login" class="btn btn-primary">Đăng Nhập</router-link>
-            <router-link to="/register" class="btn btn-secondary">Đăng Ký</router-link>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Recent orders marquee (template purchase-notice bar style) -->
     <section v-if="recentOrders.length > 0" class="recent-orders-bar">
       <div class="container">
@@ -318,7 +302,7 @@ const resetAutoSlide = () => {
 // ================== CAROUSEL LOGIC ==================
 
 // Responsive items per view
-const categoriesPerView = ref(3)
+const categoriesPerView = ref(4)
 const productsPerView = ref(4)
 
 // Category carousel state
@@ -428,16 +412,16 @@ const stopCarouselAutoSlide = () => {
 const updateItemsPerView = () => {
   const width = window.innerWidth
   if (width < 480) {
-    categoriesPerView.value = 1
+    categoriesPerView.value = 2
     productsPerView.value = 1
   } else if (width < 768) {
-    categoriesPerView.value = 2
+    categoriesPerView.value = 3
     productsPerView.value = 2
   } else if (width < 1024) {
-    categoriesPerView.value = 3
+    categoriesPerView.value = 4
     productsPerView.value = 3
   } else {
-    categoriesPerView.value = 3
+    categoriesPerView.value = 4
     productsPerView.value = 4
   }
 }
@@ -768,36 +752,6 @@ const initScrollReveal = () => {
   text-decoration: underline;
 }
 
-/* ===== AUTH PROMPT (template style) ===== */
-.auth-prompt-section {
-  padding-top: 0.75rem;
-}
-
-.auth-prompt-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 0.875rem 1.25rem;
-  box-shadow: var(--shadow);
-}
-
-.auth-prompt-text {
-  margin: 0;
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-}
-
-.auth-prompt-actions {
-  display: flex;
-  gap: 0.5rem;
-  flex-shrink: 0;
-}
-
 /* ===== SUB-BANNER ROW: deposit + promo ===== */
 .sub-banner-row {
   padding-bottom: 0;
@@ -919,7 +873,7 @@ const initScrollReveal = () => {
 }
 
 .category-thumb-fallback {
-  font-size: 2.5rem;
+  font-size: 2rem;
 }
 
 .category-overlay {
@@ -927,26 +881,26 @@ const initScrollReveal = () => {
 }
 
 .category-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(184, 0, 0, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(184, 0, 0, 0.12);
   border-color: var(--primary);
 }
 
 .category-content {
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 0.75rem;
   text-align: center;
 }
 
 .category-card h3 {
-  font-size: 0.95rem;
-  margin-bottom: 0.25rem;
+  font-size: 0.85rem;
+  margin-bottom: 0.15rem;
   font-weight: 700;
   color: var(--text);
   text-transform: uppercase;
 }
 
 .category-content p {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
   margin: 0;
 }
@@ -954,66 +908,54 @@ const initScrollReveal = () => {
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .section {
-    padding: 3rem 0;
+    padding: 1.5rem 0;
   }
 
   .section-title {
-    font-size: 1.5rem;
-    margin-bottom: 2rem;
+    font-size: 1.15rem;
+    margin-bottom: 1rem;
   }
 
   .category-card {
-    padding: 1.5rem 1rem;
+    padding: 0;
   }
 
   .category-card:hover {
-    transform: translateY(-4px) scale(1.01);
-  }
-
-  .category-icon {
-    height: 60px;
-    font-size: 2.5rem;
-  }
-
-  .category-img {
-    width: 60px;
-    height: 60px;
+    transform: translateY(-2px);
   }
 
   .category-card h3 {
-    font-size: 1.1rem;
+    font-size: 0.8rem;
   }
 
-  .category-card p {
-    font-size: 0.85rem;
+  .category-content p {
+    font-size: 0.7rem;
   }
 }
 
 @media (max-width: 480px) {
   .section {
-    padding: 1.5rem 0;
+    padding: 1rem 0;
   }
 
   .section-title {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 
   .category-card {
-    padding: 0.75rem;
-  }
-
-  .category-icon {
-    height: 40px;
-    font-size: 1.5rem;
-  }
-
-  .category-img {
-    width: 40px;
-    height: 40px;
+    padding: 0;
   }
 
   .category-card h3 {
-    font-size: 0.9rem;
+    font-size: 0.75rem;
+  }
+
+  .category-content {
+    padding: 0.35rem 0.5rem;
+  }
+
+  .category-content p {
+    font-size: 0.65rem;
   }
 
   /* Carousel mobile */

@@ -15,11 +15,6 @@
       </div>
       <h3 class="product-name">{{ product.name }}</h3>
       <div class="product-divider"></div>
-      <div class="product-pricing">
-        <span class="product-price">{{ formatPrice(currentPrice) }}</span>
-        <span v-if="isOnSale" class="product-price-old">{{ formatPrice(product.price) }}</span>
-        <span v-if="isOnSale" class="discount-badge">-{{ discountPercent }}%</span>
-      </div>
       <div class="product-stats">
         <span class="product-stock" :class="stockClass">
           <span class="stock-dot"></span>
@@ -29,6 +24,11 @@
         <span class="product-sold">
           Đã bán {{ product.sold_count || 0 }}
         </span>
+      </div>
+      <div class="product-pricing">
+        <span class="product-price">{{ formatPrice(currentPrice) }}</span>
+        <span v-if="isOnSale" class="product-price-old">{{ formatPrice(product.price) }}</span>
+        <span v-if="isOnSale" class="discount-badge">-{{ discountPercent }}%</span>
       </div>
       <!-- Stock Progress Bar -->
       <div v-if="product.stock > 0 && product.stock <= 20" class="stock-bar-wrapper">
@@ -119,7 +119,9 @@ const formatPrice = (price) => {
 <style scoped>
 .product-card {
   position: relative;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   color: var(--text);
   background: var(--bg-secondary);
   border: 1px solid var(--border);
@@ -134,17 +136,22 @@ const formatPrice = (price) => {
   transform: translateY(-3px);
 }
 
-/* Image Wrapper */
+/* Image Wrapper — chuẩn 5:3 / 16:9 của shopnhanviencu.net */
 .product-image-wrapper {
   position: relative;
   overflow: hidden;
-  height: 200px;
+  width: 100%;
+  aspect-ratio: 5 / 3;
+  flex-shrink: 0;
+  background: var(--bg-tertiary);
 }
 
 .product-image {
   width: 100%;
   height: 100%;
+  aspect-ratio: 5 / 3;
   object-fit: cover;
+  display: block;
   background: var(--bg-tertiary);
   transition: transform 0.4s ease;
 }
@@ -155,24 +162,30 @@ const formatPrice = (price) => {
 
 /* Product Info */
 .product-info {
-  padding: 1rem;
+  padding: 0.85rem 1rem 1rem;
   position: relative;
   z-index: 1;
   background: var(--bg-secondary);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .product-category {
   font-size: 0.7rem;
   color: var(--primary);
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.3rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .product-name {
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
   color: var(--text);
   font-size: 0.95rem;
   line-height: 1.4;
@@ -180,6 +193,27 @@ const formatPrice = (price) => {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Divider */
+.product-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0.4rem 0;
+}
+
+/* Stats line: stock | sold */
+.product-stats {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+}
+
+.product-stats-sep {
+  color: var(--border);
 }
 
 /* Pricing */
@@ -192,7 +226,7 @@ const formatPrice = (price) => {
 }
 
 .product-price {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 700;
   color: var(--primary);
 }
@@ -213,90 +247,42 @@ const formatPrice = (price) => {
   border: 1px solid rgba(184, 0, 0, 0.2);
 }
 
-/* Divider (template s2-card style) */
-.product-divider {
-  height: 1px;
-  background: var(--border);
-  margin: 0.5rem 0;
-}
-
-/* Stats line: stock | sold (template style) */
-.product-stats {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.8rem;
-  color: var(--text-muted);
-}
-
-.product-stats-sep {
-  color: var(--border);
-}
-
-/* Meta */
-.product-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.8rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid var(--border);
-}
-
-.product-stock {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-weight: 500;
-}
-
-.stock-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: currentColor;
-}
-
-.product-sold {
-  color: var(--text-muted);
-  font-weight: 500;
-}
-
 /* Stock Progress Bar */
 .stock-bar-wrapper {
-  margin-top: 10px;
+  margin-top: 6px;
   position: relative;
-  height: 5px;
+  height: 4px;
   background: rgba(0, 0, 0, 0.06);
-  border-radius: 3px;
+  border-radius: 2px;
   overflow: hidden;
 }
 
 .stock-bar {
   height: 100%;
   background: linear-gradient(90deg, var(--danger), var(--warning));
-  border-radius: 3px;
+  border-radius: 2px;
   transition: width 0.5s ease;
 }
 
 .stock-text {
   position: absolute;
   right: 0;
-  top: -18px;
-  font-size: 11px;
+  top: -16px;
+  font-size: 10px;
   color: var(--text-muted);
 }
 
 /* MUA NGAY Button */
 .product-action {
-  margin-top: 0.75rem;
+  margin-top: auto;
+  padding-top: 0.6rem;
 }
 
 .btn-buy {
   display: block;
   width: 100%;
   text-align: center;
-  padding: 0.5rem;
+  padding: 0.45rem;
   background: var(--primary);
   color: white;
   border-radius: var(--radius-sm);
@@ -369,12 +355,8 @@ const formatPrice = (price) => {
 
 /* Responsive */
 @media (max-width: 640px) {
-  .product-image-wrapper {
-    height: 160px;
-  }
-  
   .product-info {
-    padding: 0.75rem;
+    padding: 0.6rem 0.75rem;
   }
   
   .product-name {
@@ -384,9 +366,13 @@ const formatPrice = (price) => {
   .product-price {
     font-size: 1rem;
   }
+
+  .product-stats {
+    font-size: 0.72rem;
+  }
   
   .btn-buy {
-    padding: 0.4rem;
+    padding: 0.35rem;
     font-size: 0.8rem;
   }
 }

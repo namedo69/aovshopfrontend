@@ -72,8 +72,8 @@ onMounted(() => {
 
 .categories-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
 }
 
 .category-card {
@@ -108,31 +108,31 @@ onMounted(() => {
 }
 
 .category-thumb-fallback {
-  font-size: 2.5rem;
+  font-size: 2rem;
 }
 
 .category-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(184, 0, 0, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(184, 0, 0, 0.12);
   border-color: var(--primary);
   color: var(--text);
 }
 
 .category-content {
-  padding: 1rem 1.25rem;
+  padding: 0.6rem 0.75rem;
   text-align: center;
 }
 
 .category-name {
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 700;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.15rem;
   text-transform: uppercase;
   color: var(--text);
 }
 
 .category-count {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
   margin: 0;
 }
